@@ -1,0 +1,2 @@
+# Serverless DiffusionRAG Pipeline — Dependencies
+# Populated in Phase 1
