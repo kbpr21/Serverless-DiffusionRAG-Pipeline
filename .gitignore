@@ -11,6 +11,9 @@ venv/
 .venv/
 env/
 
+# ===== Internal Docs (local planning only) =====
+docs/
+
 # ===== Environment Variables =====
 .env
 .env.local
