@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.venv/
+env/
+.pytest_cache/
+
+# Git
+.git/
+.gitignore
+
+# IaC
+terraform/
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# CI/CD
+.github/
+
+# Docs
+docs/
+README.md
+
+# Secrets
+.env
+.env.local
