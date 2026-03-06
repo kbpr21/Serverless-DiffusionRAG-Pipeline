@@ -1,2 +1,7 @@
-# Serverless DiffusionRAG Pipeline — Dependencies
-# Populated in Phase 1
+fastapi==0.115.12
+uvicorn[standard]==0.34.2
+python-multipart==0.0.20
+python-dotenv==1.1.0
+httpx==0.28.1
+pageindex==0.2.6
+PyPDF2==3.0.1
