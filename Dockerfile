@@ -2,8 +2,8 @@
 FROM python:3.10-slim
 
 # === Environment Configuration ===
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 # === Working Directory ===
 WORKDIR /src
