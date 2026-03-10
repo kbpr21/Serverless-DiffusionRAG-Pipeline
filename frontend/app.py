@@ -19,13 +19,11 @@ st.set_page_config(
 # --- Default the API to the environment variable ---
 DEFAULT_API_URL = os.getenv("RAG_API_ENDPOINT", "")
 
-# --- Sidebar: Connection & Ingestion ---
+# Use the API URL from environment internally
+api_url = DEFAULT_API_URL
+
+# --- Sidebar: Ingestion ---
 with st.sidebar:
-    st.header("⚙️ Configuration")
-    api_url = st.text_input("RAG API Endpoint", value=DEFAULT_API_URL, type="password", help="Loaded from .env RAG_API_ENDPOINT")
-
-    st.divider()
-
     st.header("📄 Knowledge Base")
     st.markdown("Upload a document to chat with it.")
     
