@@ -31,27 +31,23 @@ jobs:
             }
 
       - name: Build Image on Azure (ACR Build)
-        uses: azure/cli@v1
-        with:
-          inlineScript: |
-            az acr build \
-              --registry acrdiffusionrag \
-              --image ${{ env.IMAGE_NAME }}:${{ github.sha }} \
-              --file Dockerfile .
+        run: |
+          az acr build \
+            --registry acrdiffusionrag \
+            --image ${{ env.IMAGE_NAME }}:${{ github.sha }} \
+            --file Dockerfile .
 
       - name: Deploy to Azure Container Apps
-        uses: azure/cli@v1
-        with:
-          inlineScript: |
-            # Update the secret value with the actual API key
-            az containerapp secret set \
-              --name ${{ env.CONTAINER_APP_NAME }} \
-              --resource-group ${{ env.RESOURCE_GROUP }} \
-              --secrets mercury-api-key=${{ secrets.MERCURY_API_KEY }}
+        run: |
+          # Update the secret value with the actual API key
+          az containerapp secret set \
+            --name ${{ env.CONTAINER_APP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --secrets mercury-api-key=${{ secrets.MERCURY_API_KEY }}
 
-            # Update the container image (this triggers a new revision)
-            az containerapp update \
-              --name ${{ env.CONTAINER_APP_NAME }} \
-              --resource-group ${{ env.RESOURCE_GROUP }} \
-              --image ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          # Update the container image (this triggers a new revision)
+          az containerapp update \
+            --name ${{ env.CONTAINER_APP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --image ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
