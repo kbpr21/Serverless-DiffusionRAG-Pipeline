@@ -30,17 +30,14 @@ jobs:
               "tenantId": "${{ secrets.AZURE_TENANT_ID }}"
             }
 
-      - name: Log in to Azure Container Registry
-        uses: azure/docker-login@v1
+      - name: Build Image on Azure (ACR Build)
+        uses: azure/cli@v1
         with:
-          login-server: ${{ secrets.ACR_LOGIN_SERVER }}
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
-
-      - name: Build and Push Docker Image
-        run: |
-          docker build -t ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
-          docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          inlineScript: |
+            az acr build \
+              --registry acrdiffusionrag \
+              --image ${{ env.IMAGE_NAME }}:${{ github.sha }} \
+              --file Dockerfile .
 
       - name: Deploy to Azure Container Apps
         uses: azure/cli@v1
@@ -57,3 +54,4 @@ jobs:
               --name ${{ env.CONTAINER_APP_NAME }} \
               --resource-group ${{ env.RESOURCE_GROUP }} \
               --image ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
