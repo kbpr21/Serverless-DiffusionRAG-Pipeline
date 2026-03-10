@@ -30,12 +30,11 @@ jobs:
               "tenantId": "${{ secrets.AZURE_TENANT_ID }}"
             }
 
-      - name: Build Image on Azure (ACR Build)
+      - name: Build and Push Docker Image
         run: |
-          az acr build \
-            --registry acrdiffusionrag \
-            --image ${{ env.IMAGE_NAME }}:${{ github.sha }} \
-            --file Dockerfile .
+          az acr login --name acrdiffusionrag
+          docker build -t ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
+          docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
       - name: Deploy to Azure Container Apps
         run: |
